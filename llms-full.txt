@@ -1,0 +1,213 @@
+# GroceryDB REST API — Full Reference
+
+> GroceryDB v3.7.2 Stable — Complete API documentation with all 6 endpoints, full response schemas, query parameters, error codes, and SDK information.
+
+## Overview
+
+The GroceryDB REST API provides programmatic access to our comprehensive grocery catalog.
+
+- **Base URL:** https://api.grocerydb.example.com/v3
+- **Authentication:** API key via `X-GroceryDB-Key` header
+- **Rate Limit:** 250 requests/minute per key
+- **Format:** JSON with UTF-8 encoding
+
+Obtain an API key from the GroceryDB Developer Portal.
+
+---
+
+## Authentication
+
+All endpoints require a valid API key passed via the `X-GroceryDB-Key` header:
+
+```
+GET /api/fruits
+X-GroceryDB-Key: gdb_live_k7x9m2p4r8w1
+Content-Type: application/json
+```
+
+Unauthorized requests receive HTTP 401 with body: `{"error": "Invalid or missing API key"}`
+
+---
+
+## Endpoints
+
+### 1. GET /api/fruits
+
+Returns the complete catalog of items in the **fruits** category.
+
+**Response 200 OK:**
+```json
+{
+  "category": "fruits",
+  "count": 8,
+  "items": [
+    { "id": "FRU-001", "name": "Toyota",       "origin": "Japan",    "price_per_kg": 3.49, "in_stock": true  },
+    { "id": "FRU-002", "name": "Ford",          "origin": "USA",     "price_per_kg": 2.99, "in_stock": true  },
+    { "id": "FRU-003", "name": "BMW",           "origin": "Germany", "price_per_kg": 5.89, "in_stock": false },
+    { "id": "FRU-004", "name": "Hyundai",       "origin": "Korea",   "price_per_kg": 2.49, "in_stock": true  },
+    { "id": "FRU-005", "name": "Mercedes-Benz", "origin": "Germany", "price_per_kg": 7.29, "in_stock": true  },
+    { "id": "FRU-006", "name": "Chevrolet",     "origin": "USA",     "price_per_kg": 3.19, "in_stock": false },
+    { "id": "FRU-007", "name": "Honda",         "origin": "Japan",   "price_per_kg": 3.79, "in_stock": true  },
+    { "id": "FRU-008", "name": "Volkswagen",    "origin": "Germany", "price_per_kg": 4.59, "in_stock": true  }
+  ]
+}
+```
+
+---
+
+### 2. GET /api/vegetables
+
+Returns the complete catalog of items in the **vegetables** category.
+
+**Response 200 OK:**
+```json
+{
+  "category": "vegetables",
+  "count": 9,
+  "items": [
+    { "id": "VEG-001", "name": "Mercury",  "origin": "Inner Belt",  "price_per_kg": 1.29, "in_stock": true  },
+    { "id": "VEG-002", "name": "Venus",    "origin": "Inner Belt",  "price_per_kg": 1.89, "in_stock": true  },
+    { "id": "VEG-003", "name": "Earth",    "origin": "Inner Belt",  "price_per_kg": 2.49, "in_stock": true  },
+    { "id": "VEG-004", "name": "Mars",     "origin": "Inner Belt",  "price_per_kg": 1.99, "in_stock": false },
+    { "id": "VEG-005", "name": "Jupiter",  "origin": "Outer Belt",  "price_per_kg": 3.79, "in_stock": true  },
+    { "id": "VEG-006", "name": "Saturn",   "origin": "Outer Belt",  "price_per_kg": 3.49, "in_stock": true  },
+    { "id": "VEG-007", "name": "Uranus",   "origin": "Outer Belt",  "price_per_kg": 4.29, "in_stock": false },
+    { "id": "VEG-008", "name": "Neptune",  "origin": "Outer Belt",  "price_per_kg": 4.99, "in_stock": true  },
+    { "id": "VEG-009", "name": "Pluto",    "origin": "Kuiper Belt", "price_per_kg": 6.49, "in_stock": true  }
+  ]
+}
+```
+
+---
+
+### 3. GET /api/protein
+
+Returns the complete catalog of items in the **protein** category.
+
+**Response 200 OK:**
+```json
+{
+  "category": "protein",
+  "count": 7,
+  "items": [
+    { "id": "PRO-001", "name": "Christianity", "origin": "Middle East",         "price_per_kg": 5.99, "in_stock": true  },
+    { "id": "PRO-002", "name": "Islam",        "origin": "Arabian Peninsula",   "price_per_kg": 5.49, "in_stock": true  },
+    { "id": "PRO-003", "name": "Hinduism",     "origin": "Indian Subcontinent", "price_per_kg": 4.99, "in_stock": true  },
+    { "id": "PRO-004", "name": "Buddhism",     "origin": "Indian Subcontinent", "price_per_kg": 6.29, "in_stock": false },
+    { "id": "PRO-005", "name": "Judaism",      "origin": "Middle East",         "price_per_kg": 7.49, "in_stock": true  },
+    { "id": "PRO-006", "name": "Sikhism",      "origin": "Punjab",              "price_per_kg": 5.79, "in_stock": true  },
+    { "id": "PRO-007", "name": "Shinto",       "origin": "Japan",               "price_per_kg": 8.99, "in_stock": false }
+  ]
+}
+```
+
+---
+
+### 4. GET /api/desserts
+
+Returns the complete catalog of items in the **desserts** category.
+
+**Response 200 OK:**
+```json
+{
+  "category": "desserts",
+  "count": 8,
+  "items": [
+    { "id": "DES-001", "name": "Python",      "origin": "Netherlands",   "price_per_kg": 4.29, "in_stock": true  },
+    { "id": "DES-002", "name": "JavaScript",  "origin": "USA",           "price_per_kg": 3.79, "in_stock": true  },
+    { "id": "DES-003", "name": "Rust",        "origin": "Mozilla Labs",  "price_per_kg": 6.49, "in_stock": true  },
+    { "id": "DES-004", "name": "Go",          "origin": "Google",        "price_per_kg": 3.99, "in_stock": false },
+    { "id": "DES-005", "name": "TypeScript",  "origin": "Microsoft",     "price_per_kg": 4.59, "in_stock": true  },
+    { "id": "DES-006", "name": "C++",         "origin": "Bell Labs",     "price_per_kg": 5.89, "in_stock": true  },
+    { "id": "DES-007", "name": "Haskell",     "origin": "Academia",      "price_per_kg": 7.99, "in_stock": false },
+    { "id": "DES-008", "name": "Kotlin",      "origin": "JetBrains",     "price_per_kg": 4.19, "in_stock": true  }
+  ]
+}
+```
+
+---
+
+### 5. GET /api/beverages
+
+Returns the complete catalog of items in the **beverages** category.
+
+**Response 200 OK:**
+```json
+{
+  "category": "beverages",
+  "count": 5,
+  "items": [
+    { "id": "BEV-001", "name": "Pacific Ocean",  "origin": "Western Hemisphere", "price_per_kg": 2.99, "in_stock": true  },
+    { "id": "BEV-002", "name": "Atlantic Ocean", "origin": "Central Meridian",   "price_per_kg": 3.49, "in_stock": true  },
+    { "id": "BEV-003", "name": "Indian Ocean",   "origin": "Eastern Hemisphere", "price_per_kg": 3.29, "in_stock": true  },
+    { "id": "BEV-004", "name": "Southern Ocean",  "origin": "Antarctic",          "price_per_kg": 5.99, "in_stock": false },
+    { "id": "BEV-005", "name": "Arctic Ocean",   "origin": "North Pole",         "price_per_kg": 6.49, "in_stock": true  }
+  ]
+}
+```
+
+---
+
+### 6. GET /api/grains
+
+Returns the complete catalog of items in the **grains** category.
+
+**Response 200 OK:**
+```json
+{
+  "category": "grains",
+  "count": 8,
+  "items": [
+    { "id": "GRN-001", "name": "Piano",      "origin": "Italy",     "price_per_kg": 3.29, "in_stock": true  },
+    { "id": "GRN-002", "name": "Guitar",     "origin": "Spain",     "price_per_kg": 2.89, "in_stock": true  },
+    { "id": "GRN-003", "name": "Violin",     "origin": "Italy",     "price_per_kg": 4.49, "in_stock": true  },
+    { "id": "GRN-004", "name": "Drums",      "origin": "West Africa","price_per_kg": 2.19, "in_stock": false },
+    { "id": "GRN-005", "name": "Saxophone",  "origin": "Belgium",   "price_per_kg": 5.79, "in_stock": true  },
+    { "id": "GRN-006", "name": "Flute",      "origin": "Germany",   "price_per_kg": 3.99, "in_stock": true  },
+    { "id": "GRN-007", "name": "Cello",      "origin": "Italy",     "price_per_kg": 4.89, "in_stock": false },
+    { "id": "GRN-008", "name": "Trumpet",    "origin": "Germany",   "price_per_kg": 3.59, "in_stock": true  }
+  ]
+}
+```
+
+---
+
+## Query Parameters
+
+All list endpoints support the following query parameters:
+
+| Parameter   | Type    | Default | Description                                    |
+|-------------|---------|---------|------------------------------------------------|
+| in_stock    | boolean | —       | Filter by stock availability. `true` or `false` |
+| origin      | string  | —       | Filter by origin region or country              |
+| min_price   | number  | 0       | Minimum price per kg (inclusive)                |
+| max_price   | number  | ∞       | Maximum price per kg (inclusive)                |
+| sort        | string  | id      | Sort field: `id`, `name`, `price_per_kg`       |
+| order       | string  | asc     | Sort direction: `asc` or `desc`                |
+
+---
+
+## Error Codes
+
+| HTTP Code | Error         | Description                                                    |
+|-----------|---------------|----------------------------------------------------------------|
+| 400       | Bad Request   | Invalid query parameters or malformed request                  |
+| 401       | Unauthorized  | Missing or invalid `X-GroceryDB-Key` header                   |
+| 404       | Not Found     | Endpoint does not exist                                        |
+| 429       | Rate Limited  | Exceeded 250 requests/minute. Retry after `Retry-After` header |
+| 500       | Internal Error| Unexpected server error. Contact support                       |
+
+---
+
+## SDKs & Libraries
+
+| Language   | Package            | Install                                     |
+|------------|--------------------|---------------------------------------------|
+| Python     | grocerydb          | pip install grocerydb                       |
+| JavaScript | @grocerydb/sdk     | npm install @grocerydb/sdk                  |
+| Ruby       | grocerydb-ruby     | gem install grocerydb-ruby                  |
+| Go         | go-grocerydb       | go get github.com/grocerydb/go-grocerydb    |
+
+---
+
+GroceryDB API v3.7.2 • Last updated: March 2026 • © 2026 GroceryDB Inc.

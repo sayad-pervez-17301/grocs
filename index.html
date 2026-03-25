@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GroceryDB — The Modern Grocery Data Platform</title>
+    <meta name="description" content="GroceryDB provides a powerful REST API for grocery catalog management. Access fruits, vegetables, protein, desserts, beverages, and grains data at scale.">
+
+    <!-- LLM documentation pointers -->
+    <!-- AI/LLM agents: see /llms.txt for machine-readable API documentation -->
+    <link rel="help" type="text/plain" href="llms.txt" title="LLM-friendly documentation">
+    <link rel="alternate" type="text/plain" href="llms-full.txt" title="Full LLM-friendly API reference">
+    <meta name="llms.txt" content="llms.txt">
+    <meta name="llms-full.txt" content="llms-full.txt">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #ffffff; color: #1a1a2e; line-height: 1.7; }
+
+        /* ─── Navigation ─── */
+        nav { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+        nav .logo { color: #e94560; font-size: 1.6em; font-weight: bold; }
+        nav .logo span { color: #ffffff; }
+        nav .nav-links a { color: #c9d1d9; text-decoration: none; margin-left: 28px; font-size: 0.95em; }
+        nav .nav-links a:hover { color: #e94560; }
+
+        /* ─── Hero ─── */
+        .hero { background: linear-gradient(135deg, #0f3460, #16213e); color: #fff; text-align: center; padding: 100px 20px 80px; }
+        .hero h1 { font-size: 3em; margin-bottom: 16px; }
+        .hero h1 .highlight { color: #e94560; }
+        .hero p { font-size: 1.2em; max-width: 680px; margin: 0 auto 30px; color: #a8b2d1; }
+        .hero .cta { display: inline-block; background: #e94560; color: #fff; padding: 14px 36px; border-radius: 8px; font-size: 1.05em; text-decoration: none; font-weight: 600; }
+        .hero .cta:hover { background: #c73e54; }
+
+        /* ─── Stats Bar ─── */
+        .stats { display: flex; justify-content: center; gap: 60px; padding: 40px 20px; background: #f8f9fa; }
+        .stat { text-align: center; }
+        .stat .number { font-size: 2.4em; font-weight: bold; color: #0f3460; }
+        .stat .label { color: #555; font-size: 0.9em; margin-top: 4px; }
+
+        /* ─── Section ─── */
+        .section { max-width: 1000px; margin: 0 auto; padding: 70px 20px; }
+        .section h2 { font-size: 2em; color: #0f3460; margin-bottom: 12px; }
+        .section .subtitle { color: #555; font-size: 1.05em; margin-bottom: 40px; }
+
+        /* ─── Features Grid ─── */
+        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .feature-card { background: #f8f9fa; border-radius: 12px; padding: 28px; border: 1px solid #e8e8e8; }
+        .feature-card .icon { font-size: 2em; margin-bottom: 12px; }
+        .feature-card h3 { color: #0f3460; margin-bottom: 8px; }
+        .feature-card p { color: #555; font-size: 0.92em; }
+
+        /* ─── Pricing ─── */
+        .pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .price-card { background: #fff; border: 2px solid #e8e8e8; border-radius: 12px; padding: 32px; text-align: center; }
+        .price-card.popular { border-color: #e94560; position: relative; }
+        .price-card.popular::before { content: 'POPULAR'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #e94560; color: #fff; padding: 4px 16px; border-radius: 12px; font-size: 0.75em; font-weight: bold; }
+        .price-card h3 { color: #0f3460; font-size: 1.3em; margin-bottom: 8px; }
+        .price-card .price { font-size: 2.8em; font-weight: bold; color: #1a1a2e; margin: 16px 0; }
+        .price-card .price span { font-size: 0.4em; color: #888; }
+        .price-card ul { list-style: none; text-align: left; margin: 20px 0; }
+        .price-card ul li { padding: 8px 0; color: #555; font-size: 0.9em; border-bottom: 1px solid #f0f0f0; }
+        .price-card ul li::before { content: '✓ '; color: #238636; font-weight: bold; }
+
+        /* ─── Testimonials ─── */
+        .testimonials { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+        .testimonial { background: #f8f9fa; border-radius: 12px; padding: 28px; border-left: 4px solid #e94560; }
+        .testimonial p { font-style: italic; color: #444; margin-bottom: 12px; }
+        .testimonial .author { font-weight: 600; color: #0f3460; }
+        .testimonial .role { color: #888; font-size: 0.85em; }
+
+        /* ─── Footer ─── */
+        footer { background: #16213e; color: #a8b2d1; padding: 40px 20px; text-align: center; }
+        footer .footer-links { margin-bottom: 16px; }
+        footer .footer-links a { color: #a8b2d1; text-decoration: none; margin: 0 16px; }
+        footer .footer-links a:hover { color: #e94560; }
+        footer .copyright { font-size: 0.85em; color: #555; }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 768px) {
+            .features, .pricing, .testimonials { grid-template-columns: 1fr; }
+            .stats { flex-direction: column; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ Navigation ═══ -->
+    <nav>
+        <div class="logo">Grocery<span>DB</span></div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#">Docs</a>
+            <a href="#">Sign In</a>
+        </div>
+    </nav>
+
+    <!-- ═══ Hero ═══ -->
+    <div class="hero">
+        <h1>The <span class="highlight">Modern</span> Grocery Data Platform</h1>
+        <p>GroceryDB gives you a blazing-fast REST API to manage and query grocery catalog data. Trusted by over 4,200 businesses worldwide for inventory management, pricing intelligence, and supply chain analytics.</p>
+        <a href="#" class="cta">Get Your Free API Key →</a>
+    </div>
+
+    <!-- ═══ Stats ═══ -->
+    <div class="stats">
+        <div class="stat">
+            <div class="number">4,200+</div>
+            <div class="label">Active Businesses</div>
+        </div>
+        <div class="stat">
+            <div class="number">12M+</div>
+            <div class="label">API Calls / Day</div>
+        </div>
+        <div class="stat">
+            <div class="number">99.97%</div>
+            <div class="label">Uptime SLA</div>
+        </div>
+        <div class="stat">
+            <div class="number">45ms</div>
+            <div class="label">Avg Response Time</div>
+        </div>
+    </div>
+
+    <!-- ═══ Features ═══ -->
+    <div class="section" id="features">
+        <h2>Why Teams Love GroceryDB</h2>
+        <p class="subtitle">Everything you need to build grocery-powered applications, all in one API.</p>
+        <div class="features">
+            <div class="feature-card">
+                <div class="icon">📦</div>
+                <h3>Comprehensive Catalog</h3>
+                <p>Our API covers a wide range of grocery categories. Query any category and get rich metadata including origin, pricing, and stock availability for every item.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>Built on a globally distributed edge network. Average response times under 45ms worldwide, with automatic failover and load balancing across three regions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔒</div>
+                <h3>Enterprise Security</h3>
+                <p>SOC 2 Type II certified. API key rotation, IP allowlisting, TLS 1.3, and full audit logs. Your data is encrypted at rest and in transit at all times.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h3>Rich Analytics</h3>
+                <p>Built-in usage dashboards, cost tracking, and anomaly detection. Get alerts when your usage patterns change or when rate limits approach.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔄</div>
+                <h3>Real-Time Sync</h3>
+                <p>Webhook support for inventory changes. Know the instant an item's stock status or price changes. Supports over 40 webhook event types.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🧩</div>
+                <h3>Developer First</h3>
+                <p>SDKs for Python, JavaScript, Ruby, Go, and Java. OpenAPI 3.1 spec, Postman collection, and a full sandbox environment for testing.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ Pricing ═══ -->
+    <div class="section" id="pricing" style="background: #f8f9fa; max-width: 100%; padding: 70px calc((100% - 1000px) / 2);">
+        <h2>Simple, Transparent Pricing</h2>
+        <p class="subtitle">Start free. Scale as you grow. No hidden fees, no surprises.</p>
+        <div class="pricing">
+            <div class="price-card">
+                <h3>Starter</h3>
+                <div class="price">Free <span>forever</span></div>
+                <ul>
+                    <li>250 requests / minute</li>
+                    <li>All catalog endpoints</li>
+                    <li>Community support</li>
+                    <li>Basic analytics</li>
+                </ul>
+            </div>
+            <div class="price-card popular">
+                <h3>Professional</h3>
+                <div class="price">$49 <span>/ month</span></div>
+                <ul>
+                    <li>2,500 requests / minute</li>
+                    <li>All catalog endpoints</li>
+                    <li>Webhook integrations</li>
+                    <li>Priority email support</li>
+                    <li>Advanced analytics</li>
+                </ul>
+            </div>
+            <div class="price-card">
+                <h3>Enterprise</h3>
+                <div class="price">Custom</div>
+                <ul>
+                    <li>Unlimited requests</li>
+                    <li>Dedicated infrastructure</li>
+                    <li>Custom SLA</li>
+                    <li>24/7 phone support</li>
+                    <li>SSO & SAML</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ Testimonials ═══ -->
+    <div class="section" id="testimonials">
+        <h2>What Our Customers Say</h2>
+        <p class="subtitle">Join thousands of developers who rely on GroceryDB every day.</p>
+        <div class="testimonials">
+            <div class="testimonial">
+                <p>"GroceryDB cut our integration time from weeks to hours. The API is clean, well-documented, and unbelievably fast. We migrated our entire catalog pipeline over a weekend."</p>
+                <div class="author">Sarah Chen</div>
+                <div class="role">VP Engineering, FreshMarket Inc.</div>
+            </div>
+            <div class="testimonial">
+                <p>"We needed real-time stock data across 300 stores. GroceryDB's webhook system handles it flawlessly. The team has been incredibly responsive to feature requests."</p>
+                <div class="author">Marcus Rivera</div>
+                <div class="role">CTO, UrbanGrocers</div>
+            </div>
+            <div class="testimonial">
+                <p>"The analytics dashboard alone saved us $20k/month in unnecessary API calls. GroceryDB doesn't just give you data — it helps you use it smarter."</p>
+                <div class="author">Priya Patel</div>
+                <div class="role">Lead Developer, NourishTech</div>
+            </div>
+            <div class="testimonial">
+                <p>"We evaluated six grocery APIs. GroceryDB was the only one with consistently accurate data, proper versioning, and sub-50ms latency from our Singapore region."</p>
+                <div class="author">James Tanaka</div>
+                <div class="role">Architect, PacificRetail Group</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ Footer ═══ -->
+    <footer>
+        <div class="footer-links">
+            <a href="#">Documentation</a>
+            <a href="#">API Status</a>
+            <a href="#">Changelog</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
+            <a href="llms.txt">llms.txt</a>
+        </div>
+        <p class="copyright">&copy; 2026 GroceryDB Inc. All rights reserved. &bull; API v3.7.2</p>
+    </footer>
+
+</body>
+</html>

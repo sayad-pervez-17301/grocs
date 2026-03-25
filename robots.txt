@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: llms.txt
+Sitemap: llms-full.txt
